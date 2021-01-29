@@ -19,9 +19,9 @@ useEffect(() => {
 }, [])
 
   return (
-    <div>
+    <>
       {frontCards && frontCards.map(card => <Card key={card.id} card={card}/>)}
-    </div>
+    </>
   );
 }
 

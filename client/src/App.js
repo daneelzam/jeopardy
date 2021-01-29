@@ -26,7 +26,7 @@ function App() {
 
         <NavBar/>
         <Switch>
-            <div className="container row" style={{width: "300px"}}>
+            <div className="container row" style={{width: "800px", marginTop: '60px'}}>
             <Route exact path="/"> {isAuth ? <Redirect to='/dashboard'/> : <Redirect to='/login'/>}</Route>
             <Route path="/login"><Login/></Route>
             <Route path="/logout"><LogOut/></Route>
