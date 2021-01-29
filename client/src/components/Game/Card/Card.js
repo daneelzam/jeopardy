@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Item from '../Item/Item'
 
 function Card({card}) {
-
+    const btn = useRef();
   return (
     <div style={{display: 'flex'}}>
       <h5 style={{width: '250px'}}> {card.title}</h5> 
@@ -11,7 +11,7 @@ function Card({card}) {
            <li style={{marginLeft: '10px'}} key={question.id}>
               <button data-target={`modal${question.id}`} className="btn modal-trigger">{question.cost}</button>
               <div id={`modal${question.id}`} className="modal">
-                <Item key={question.id} question={question}/>
+                <Item btn={btn} key={question.id} question={question}/>
               </div>
           </li>))}
       </ul>

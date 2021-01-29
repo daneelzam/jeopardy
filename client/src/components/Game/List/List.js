@@ -5,6 +5,10 @@ import Card from '../Card/Card'
 
 function List(props) {
 
+  const score = useSelector((state) => {
+    return state.game.score
+  })
+
 const frontCards = useSelector((state) => {
   return state.game.frontCards
 })
@@ -20,6 +24,7 @@ useEffect(() => {
 
   return (
     <>
+      <p>Очки: {score}</p>
       {frontCards && frontCards.map(card => <Card key={card.id} card={card}/>)}
     </>
   );

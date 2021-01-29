@@ -25,16 +25,17 @@ function App() {
       <Router>
 
         <NavBar/>
+           <div className="container row" style={{width: "300px"}}>
         <Switch>
-            <div className="container row" style={{width: "800px", marginTop: '60px'}}>
             <Route exact path="/"> {isAuth ? <Redirect to='/dashboard'/> : <Redirect to='/login'/>}</Route>
             <Route path="/login"><Login/></Route>
             <Route path="/logout"><LogOut/></Route>
             <Route path="/signup"><SignUp/></Route>
             <PrivateRoute path="/game"> <List/></PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard/></PrivateRoute>
-            </div>
+
         </Switch>
+           </div>
       </Router>
       </div>
 
@@ -42,3 +43,5 @@ function App() {
 }
 
 export default App;
+
+
