@@ -55,7 +55,7 @@ function SignUp(props) {
         return (
         <div>
         <form onSubmit={submitHandler}>
-            <input onChange={usernameHandler} type="text" placeholder="Enter your email" value={username}/>
+            <input onChange={usernameHandler} type="text" placeholder="Enter your name" value={username}/>
             <input onChange={emailHandler} type="text" placeholder="Enter your email" value={email}/>
             <input onChange={passwordHandler} type="password" placeholder='Enter your password' value={password}/>
             <button type="submit">Sign Up</button>
