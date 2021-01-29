@@ -23,14 +23,17 @@ function App() {
   return (
       <div>
       <Router>
+
         <NavBar/>
         <Switch>
+            <div className="container row" style={{width: "300px"}}>
             <Route exact path="/"> {isAuth ? <Redirect to='/dashboard'/> : <Redirect to='/login'/>}</Route>
             <Route path="/login"><Login/></Route>
             <Route path="/logout"><LogOut/></Route>
             <Route path="/signup"><SignUp/></Route>
             <PrivateRoute path="/game"> <List/></PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard/></PrivateRoute>
+            </div>
         </Switch>
       </Router>
       </div>
