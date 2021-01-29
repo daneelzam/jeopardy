@@ -4,12 +4,12 @@ import Item from '../Item/Item'
 function Card({card}) {
     const btn = useRef();
   return (
-    <div>
-      <h1>{card.title}</h1> 
-      <ul>
+    <div style={{display: 'flex'}}>
+      <h5 style={{width: '250px'}}> {card.title}</h5> 
+      <ul style={{display: 'flex'}}>
           {card.questions.map(question => (
-           <li key={question.id}>
-              <button ref={btn} data-target={`modal${question.id}`} className="btn modal-trigger">{question.cost}</button>
+           <li style={{marginLeft: '10px'}} key={question.id}>
+              <button data-target={`modal${question.id}`} className="btn modal-trigger">{question.cost}</button>
               <div id={`modal${question.id}`} className="modal">
                 <Item btn={btn} key={question.id} question={question}/>
               </div>

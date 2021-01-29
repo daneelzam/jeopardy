@@ -23,10 +23,10 @@ useEffect(() => {
 }, [])
 
   return (
-    <div>
+    <>
       <p>Очки: {score}</p>
       {frontCards && frontCards.map(card => <Card key={card.id} card={card}/>)}
-    </div>
+    </>
   );
 }
 
