@@ -8,22 +8,23 @@ function Login(props) {
     const history = useHistory()
 
     const [error, setError] = useState()
-    const [email, setEmail] = useState()
-    const [password,setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password,setPassword] = useState('')
 
     const emailHandler = (event) => {
-        const email = event.target.email.value
+        const email = event.target.value
         setEmail(email)
     }
 
     const passwordHandler = (event) => {
-        const password = event.target.password.value
+        const password = event.target.value
         setPassword(password)
     }
 
     const submitHandler = (event) => {
         event.preventDefault();
-        fetch(`${process.env.REACT_APP_URL}/api/auth/login`,{
+        // console.log(process.env.REACT_APP_URL)
+        fetch(`http://localhost:4000/api/auth/login`,{
             method:'POST',
             headers: {
                 'Content-Type' : 'application/json'
