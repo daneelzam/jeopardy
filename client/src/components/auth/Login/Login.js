@@ -24,7 +24,7 @@ function Login(props) {
     const submitHandler = (event) => {
         event.preventDefault();
         // console.log(process.env.REACT_APP_URL)
-        fetch(`http://localhost:4000/api/auth/login`,{
+        fetch(`${process.env.REACT_APP_URL}/api/auth/login`,{
             method:'POST',
             headers: {
                 'Content-Type' : 'application/json'

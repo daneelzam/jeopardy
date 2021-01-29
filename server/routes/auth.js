@@ -6,6 +6,7 @@ const saltRounds = 10
 
 router.post('/signup', async (req, res) => {
   const { username, email, password } = req.body
+  console.log(username,email,password)
   try {
     const user = new User({
       username,
@@ -13,7 +14,8 @@ router.post('/signup', async (req, res) => {
       password: await bcrypt.hash(password, saltRounds)
     })
     await user.save()
-    res.json({ status: true })
+    req.session.user = user;
+    res.json({ user })
   } catch (error) {
     res.json(error.message)
   }
@@ -21,9 +23,9 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body
-  console.log(req.body)
+
   const user = await User.findOne({ email })
-  console.log(user)
+
   if(user && (await bcrypt.compare(password, user.password))) {
     req.session.user = user
     res.json({ user })
@@ -33,12 +35,15 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/logout', async (req, res) => {
-  if (req.session.user) {
+
+
     try {
+
       await req.session.destroy();
       res.clearCookie('auth');
+      res.end()
     } catch (error) {}
-  }
+
 });
 
 module.exports = router
