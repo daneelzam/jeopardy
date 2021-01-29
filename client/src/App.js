@@ -1,5 +1,6 @@
 
 import {React} from "react";
+import { useSelector } from 'react-redux'
 import {
     BrowserRouter as Router,
     Switch,
@@ -13,9 +14,12 @@ import Login from "./components/auth/Login/Login";
 import LogOut from "./components/auth/Logout/LogOut";
 import SignUp from "./components/auth/SignUp/SignUp";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import List from "./components/Game/List/List";
 
 function App() {
-  const isAuth = false
+  const isAuth = useSelector((state) => {
+    return state.auth.isAuth
+  })
   return (
       <div>
       <Router>
@@ -25,6 +29,7 @@ function App() {
             <Route path="/login"><Login/></Route>
             <Route path="/logout"><LogOut/></Route>
             <Route path="/signup"><SignUp/></Route>
+            <PrivateRoute path="/game"> <List/></PrivateRoute>
             <PrivateRoute path="/dashboard"> <Dashboard/></PrivateRoute>
         </Switch>
       </Router>
