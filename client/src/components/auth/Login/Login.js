@@ -44,13 +44,28 @@ function Login(props) {
 
 
     return (
-        <form onSubmit={submitHandler}>
-            <input onChange={emailHandler} type="text"  placeholder="Enter your email" value={email}/>
-            <input onChange={passwordHandler} type="password" name="password" placeholder='Enter your password' value={password}/>
-            <button type="submit">Login</button>
-            <div>{error && error}</div>
-        </form>
+
+        <div className="row" style={{margin:"100px auto"}}>
+            <form className="col s12" style={{display:"flex" ,flexDirection:"column"}} onSubmit={submitHandler}>
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input onChange={emailHandler} type="text"  placeholder="Enter your email" value={email}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-field col s12">
+                        <input onChange={passwordHandler} type="password" name="password" placeholder='Enter your password' value={password}/>
+                    </div>
+                </div>
+                <button className="waves-effect waves-light btn" type="submit">Login</button>
+                <div className="new badge red">{error && error}</div>
+            </form>
+        </div>
+
+
     );
 }
 
 export default Login;
+
+
