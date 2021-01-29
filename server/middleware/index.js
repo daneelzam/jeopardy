@@ -1,11 +1,17 @@
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+const { dbConnect } = require('./db-connect')
+const cors = require('cors')
+const dotenv = require('dotenv')
+
 const Config = function(app) {
-  const express = require('express')
-  const cookieParser = require('cookie-parser')
-  const session = require('express-session')
-  const FileStore = require('session-file-store')(session)
-  const { dbConnect } = require('./db-connect')
+  dotenv.config()
+  app.use(cors())
   
   dbConnect()
+  
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
 
@@ -25,4 +31,4 @@ const Config = function(app) {
   )
 }  
 
-module.exports = { Config }
+module.exports = { Config };
