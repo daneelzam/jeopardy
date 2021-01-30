@@ -16,10 +16,11 @@ function Item({question, btn}) {
             .then(data => {
                 if (answer == data.answer){
                     dispatch(rightAnsAC(question.cost))
-                    btn.current.classList.add('disabled')
+                    console.log(btn.current)
+                    // btn.current.classList.add('disabled')
                 } else {
-                    console.log(btn.current.classList)
-                    btn.current.classList.add('disabled')
+                    console.log(btn.current)
+                    // btn.current.classList.add('disabled')
                 }
             })
     }
@@ -28,7 +29,7 @@ function Item({question, btn}) {
       <form onSubmit={submitHandler}>
        <p>{question.title}</p>
         <input onChange={answerHandler} value={answer}/>
-        <button>Ответить</button>
+        <button className="btn">Ответить</button>
       </form>
     </div>
   );

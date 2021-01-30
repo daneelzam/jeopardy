@@ -12,4 +12,10 @@ router.get('/game', async (req, res) => {
   res.json({frontCards})
 })
 
+router.get('/game/:id', async (req, res) => {
+  const {id} = req.params
+  const questtion = await Question.findOne({_id: id})
+  res.json({answer: questtion.answer})
+})
+
 module.exports =router
