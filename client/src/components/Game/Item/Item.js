@@ -14,17 +14,19 @@ function Item({ question }) {
     fetch(`${process.env.REACT_APP_URL}/api/game/${question.id}`)
       .then((res) => res.json())
       .then((data) => {
-        if (answer === data.answer) {
-          dispatch(rightAnsAC(question.cost));
+        if (answer.trim().toLowerCase() === data.answer.trim().toLowerCase()) {
+          dispatch(rightAnsAC(question.id, question.cost));
+        } else {
+          dispatch(rightAnsAC(question.id));
         }
       });
   };
   return (
     <div>
-      <form onSubmit={submitHandler}>
-       <p>{question.title}</p>
+      <form onSubmit={submitHandler} style={{ minHeight: '300px', padding: '30px' }}>
+       <span style={{ fontSize: '24px' }}>{question.title}</span>
         <input onChange={answerHandler} value={answer}/>
-        <button className="btn">Ответить</button>
+        <button className="modal-close waves-effect waves-green btn">Ответить</button>
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 
 import NavBar from './components/NavBar/NavBar';
@@ -24,18 +24,15 @@ function App() {
         <div className="container row" style={{ width: '800px' }}>
           <Switch>
             <Route exact path="/">
-              {' '}
-              {isAuth ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+              {isAuth ? <Redirect to="/game" /> : <Redirect to="/login" />}
             </Route>
             <Route path="/login"><Login /></Route>
             <Route path="/logout"><LogOut /></Route>
             <Route path="/signup"><SignUp /></Route>
             <PrivateRoute path="/game">
-              {' '}
               <List />
             </PrivateRoute>
             <PrivateRoute path="/dashboard">
-              {' '}
               <Dashboard />
             </PrivateRoute>
           </Switch>
