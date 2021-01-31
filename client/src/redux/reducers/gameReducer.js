@@ -5,9 +5,13 @@ const windowState = JSON.parse((window.localStorage.getItem('state')));
 let preloadedState = {};
 
 if (windowState && windowState.game) {
-  preloadedState = { frontCards: windowState.game.frontCards, score: windowState.game.score };
+  preloadedState = {
+    frontCards: windowState.game.frontCards,
+    score: windowState.game.score,
+    status: windowState.game.status
+  };
 } else {
-  preloadedState = { frontCards: [], score: 0 };
+  preloadedState = { frontCards: [], score: 0, status: [] };
 }
 
 const gameReducer = (state = preloadedState, action) => {
@@ -20,7 +24,8 @@ const gameReducer = (state = preloadedState, action) => {
     case RIGHT_ANS:
       return {
         ...state,
-        score: state.score + action.payload
+        score: state.score + action.payload.score,
+        status: [...state.status, action.payload.id]
       };
     default:
       return state;

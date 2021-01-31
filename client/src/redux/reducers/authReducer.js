@@ -1,4 +1,3 @@
-import React from 'react';
 import { AUTH_SUCCESSFULLY, LOGOUT } from '../types';
 
 const windowState = JSON.parse((window.localStorage.getItem('state')));
