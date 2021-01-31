@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Dashboard(props) {
-    return (
+function Dashboard() {
+  return (
         <>
-        
+
         </>
-    );
+  );
 }
 
 export default Dashboard;
