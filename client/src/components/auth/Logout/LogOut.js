@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { logoutAC } from '../../../redux/actionCreators/authAC';
+import { logoutFetchAC } from '../../../redux/actionCreators/authAC';
 
 function LogOut() {
   const history = useHistory();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}/api/auth/logout`)
-      .then(() => {
-        dispatch(logoutAC());
-        history.push('/');
-      });
-  });
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (!isAuth) {
+    history.push('/login');
+  }
+  dispatch(logoutFetchAC());
   return (
         <div>
         </div>

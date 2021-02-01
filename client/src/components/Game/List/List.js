@@ -5,20 +5,20 @@ import Card from '../Card/Card';
 
 function List() {
   const score = useSelector((state) => state.game.score);
-
   const frontCards = useSelector((state) => state.game.frontCards);
-
   const dispatch = useDispatch();
+  const [error, setError] = useState();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_URL}/api/game`)
       .then((res) => res.json())
       .then((data) => { dispatch(initGameAC(data)); })
-      .catch((err) => console.log(err));
+      .catch(() => setError('Server side problems'));
   }, []);
 
   return (
     <div style={{ minHeight: '300px', padding: '30px' }}>
+      <div className="new badge red">{error && error}</div>
       {frontCards && frontCards.map((card) => <Card key={card.id} card={card} status={true}/>)}
       <p style={{ fontSize: '24px', color: 'red' }}>Очки: {score}</p>
     </div>
