@@ -20,6 +20,11 @@ router.get('/game', async (req, res) => {
   res.json({ frontCards });
 });
 
+router.get('/games', async (req, res) => {
+  const games = await Game.find().populate('user');
+  res.json(games);
+});
+
 router.post('/game/:id', async (req, res) => {
   // получаем из тела запроса юзера и его ответ
   const { answer, user } = req.body;
