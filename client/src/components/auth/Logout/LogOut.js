@@ -1,19 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { logoutFetchAC } from '../../../redux/actionCreators/authAC';
+import { clearLocalSorage } from '../../../redux/actionCreators/gameAC';
 
 function LogOut() {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  if (!isAuth) {
-    history.push('/login');
-  }
-  dispatch(logoutFetchAC());
+
+  useEffect(() => {
+    dispatch(logoutFetchAC());
+    dispatch(clearLocalSorage());
+  }, []);
+
   return (
-        <div>
-        </div>
+        <>
+        </>
   );
 }
 

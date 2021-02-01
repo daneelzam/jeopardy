@@ -1,4 +1,5 @@
 import {
+  CLEAR_LOCAL_STORAGE,
   GAMES_LIST, GAME_ERROR, INIT_GAME, RIGHT_ANS
 } from '../types';
 
@@ -42,6 +43,16 @@ const gameReducer = (state = preloadedState, action) => {
       return {
         ...state,
         games: [...action.payload]
+      };
+    case CLEAR_LOCAL_STORAGE:
+      window.localStorage.removeItem('state');
+      return {
+        ...state,
+        frontCards: [],
+        score: 0,
+        status: [],
+        gameError: null,
+        games: []
       };
     default:
       return state;

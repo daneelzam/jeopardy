@@ -1,16 +1,8 @@
 import { React, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { loginFetchAC } from '../../../redux/actionCreators/authAC';
 
 function Login() {
-  const history = useHistory();
-
-  const isAuth = useSelector((state) => state.auth.isAuth);
-  if (isAuth) {
-    history.push('/dashboard');
-  }
-
   const authError = useSelector((state) => state.auth.authError);
 
   const dispatch = useDispatch();
@@ -34,8 +26,7 @@ function Login() {
   };
 
   return (
-
-        <div className="row" style={{ margin: '100px auto' }}>
+    <div className="row" style={{ margin: '100px auto' }}>
             <form className="col s12" style={{ display: 'flex', flexDirection: 'column' }} onSubmit={submitHandler}>
                 <div className="row">
                     <div className="input-field col s12">
@@ -50,8 +41,7 @@ function Login() {
                 <button className="waves-effect waves-light btn" type="submit">Login</button>
                 <div className="new badge red">{authError && authError}</div>
             </form>
-        </div>
-
+      </div>
   );
 }
 
