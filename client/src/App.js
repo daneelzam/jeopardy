@@ -11,7 +11,6 @@ import Login from './components/auth/Login/Login';
 import LogOut from './components/auth/Logout/LogOut';
 import SignUp from './components/auth/SignUp/SignUp';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import List from './components/Game/List/List';
 import Rank from './components/Game/Rank/Rank';
 
 function App() {
