@@ -1,4 +1,4 @@
-import { INIT_GAME, RIGHT_ANS } from '../types';
+import { GAME_ERROR, INIT_GAME, RIGHT_ANS } from '../types';
 
 const windowState = JSON.parse((window.localStorage.getItem('state')));
 
@@ -8,10 +8,13 @@ if (windowState && windowState.game) {
   preloadedState = {
     frontCards: windowState.game.frontCards,
     score: windowState.game.score,
-    status: windowState.game.status
+    status: windowState.game.status,
+    gameError: null
   };
 } else {
-  preloadedState = { frontCards: [], score: 0, status: [] };
+  preloadedState = {
+    frontCards: [], score: 0, status: [], gameError: null
+  };
 }
 
 const gameReducer = (state = preloadedState, action) => {
@@ -24,8 +27,13 @@ const gameReducer = (state = preloadedState, action) => {
     case RIGHT_ANS:
       return {
         ...state,
-        score: state.score + action.payload.score,
-        status: [...state.status, action.payload.id]
+        score: action.payload.score,
+        status: [...action.payload.status]
+      };
+    case GAME_ERROR:
+      return {
+        ...state,
+        gameError: action.payload
       };
     default:
       return state;

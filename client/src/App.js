@@ -1,10 +1,8 @@
 import { React } from 'react';
-import { useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 
 import NavBar from './components/NavBar/NavBar';
@@ -14,9 +12,9 @@ import LogOut from './components/auth/Logout/LogOut';
 import SignUp from './components/auth/SignUp/SignUp';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import List from './components/Game/List/List';
+import Rank from './components/Game/Rank/Rank';
 
 function App() {
-  const isAuth = useSelector((state) => state.auth.isAuth);
   return (
     <div>
       <Router>
@@ -24,14 +22,11 @@ function App() {
         <div className="container row" style={{ width: '800px' }}>
           <Switch>
             <Route exact path="/">
-              {isAuth ? <Redirect to="/game" /> : <Redirect to="/login" />}
+              <Rank/>
             </Route>
             <Route path="/login"><Login /></Route>
             <Route path="/logout"><LogOut /></Route>
             <Route path="/signup"><SignUp /></Route>
-            <PrivateRoute path="/game">
-              <List />
-            </PrivateRoute>
             <PrivateRoute path="/dashboard">
               <Dashboard />
             </PrivateRoute>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { rightAnsAC } from '../../../redux/actionCreators/gameAC';
+import { useDispatch, useSelector } from 'react-redux';
+import { answerFetchAC } from '../../../redux/actionCreators/gameAC';
 
 function Item({ question }) {
   const [answer, setAnswer] = useState('');
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const answerHandler = (event) => {
     const newState = event.target.value;
@@ -11,15 +12,7 @@ function Item({ question }) {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    fetch(`${process.env.REACT_APP_URL}/api/game/${question.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (answer.trim().toLowerCase() === data.answer.trim().toLowerCase()) {
-          dispatch(rightAnsAC(question.id, question.cost));
-        } else {
-          dispatch(rightAnsAC(question.id));
-        }
-      });
+    dispatch(answerFetchAC({ question, answer, user }));
   };
   return (
     <div>
