@@ -1,5 +1,6 @@
 // AuthReducer
 export const AUTH_SUCCESSFULLY = 'AUTH_SUCCESSFULLY';
+export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
 // GameReducer
 export const INIT_GAME = 'INIT_GAME';

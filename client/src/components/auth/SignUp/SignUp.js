@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { authSuccessAC } from '../../../redux/actionCreators/authAC';
+import { signupFetchAC } from '../../../redux/actionCreators/authAC';
 
 function SignUp() {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    history.push('/dashboard');
+  }
+  const authError = useSelector((state) => state.auth.authError);
+
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,21 +34,7 @@ function SignUp() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_URL}/api/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, email, password })
-    }).then((res) => res.json())
-      .then((serverData) => {
-        if (serverData.user) {
-          dispatch(authSuccessAC(serverData.user));
-          return history.push('/dashboard');
-        }
-        return setError('Fill the inputs!');
-      })
-      .catch(() => setError('Fill the inputs!'));
+    dispatch(signupFetchAC({ username, email, password }));
   };
 
   return (
@@ -64,7 +56,7 @@ function SignUp() {
             </div>
         </div>
         <button className="waves-effect waves-light btn" type="submit">Login</button>
-        <div className="new badge red" >{error && error}</div>
+        <div className="new badge red">{authError && authError}</div>
     </form>
 </div>
 
