@@ -27,9 +27,6 @@ function App() {
             <Route path="/login"><Login /></Route>
             <Route path="/logout"><LogOut /></Route>
             <Route path="/signup"><SignUp /></Route>
-            <PrivateRoute path="/game">
-              <List />
-            </PrivateRoute>
             <PrivateRoute path="/dashboard">
               <Dashboard />
             </PrivateRoute>

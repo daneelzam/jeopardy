@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const gameSchema = new mongoose.Schema({
-  date: String,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  gain: Number,
+  score: Number,
+  status: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
 });
 
 const Game = mongoose.model('Game', gameSchema);
