@@ -1,60 +1,53 @@
-import React,{useState} from 'react';
-import {useDispatch} from 'react-redux'
-import {useHistory} from 'react-router-dom'
-import {authSuccessAC} from "../../../redux/actionCreators/authAC";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { authSuccessAC } from '../../../redux/actionCreators/authAC';
 
+function SignUp() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [error, setError] = useState(false);
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-function SignUp(props) {
+  const usernameHandler = (event) => {
+    const usernameUser = event.target.value;
+    setUsername(usernameUser);
+  };
 
-    const dispatch = useDispatch()
-    const history = useHistory();
-    const [error, setError] = useState(false);
-    const [email,setEmail] = useState('')
-    const [username,setUsername] = useState('')
-    const [password,setPassword] = useState('')
+  const emailHandler = (event) => {
+    const emailUser = event.target.value;
+    setEmail(emailUser);
+  };
 
+  const passwordHandler = (event) => {
+    const passwordUser = event.target.value;
+    setPassword(passwordUser);
+  };
 
-    const usernameHandler = (event) => {
-        const username = event.target.value
-        setUsername(username)
-    }
+  const submitHandler = (event) => {
+    event.preventDefault();
+    fetch(`${process.env.REACT_APP_URL}/api/auth/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, email, password })
+    }).then((res) => res.json())
+      .then((serverData) => {
+        if (serverData.user) {
+          dispatch(authSuccessAC(serverData.user));
+          return history.push('/dashboard');
+        }
+        return setError('Fill the inputs!');
+      })
+      .catch(() => setError('Fill the inputs!'));
+  };
 
-
-    const emailHandler = (event) => {
-        const email = event.target.value
-        setEmail(email)
-    }
-
-    const passwordHandler = (event) => {
-        const password = event.target.value
-        setPassword(password)
-    }
-
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-        fetch(`${process.env.REACT_APP_URL}/api/auth/signup`,{
-            method:'POST',
-            headers:{
-                'Content-Type' :'application/json'
-            },
-            body: JSON.stringify({username,email,password})
-        }).then(res => res.json())
-            .then((serverData) => {
-                if(serverData.user){
-                    dispatch(authSuccessAC(serverData.user));
-                    return history.push('/dashboard')
-                }
-                return setError('Fill the inputs!')
-            })
-            .catch(() => setError('Fill the inputs!'))
-    }
-
-
-
-        return (
-            <div className="row" style={{margin:"100px auto"}} >
-    <form className="col s12"  onSubmit={submitHandler} >
+  return (
+            <div className="row" style={{ margin: '100px auto' }} >
+    <form className="col s12" onSubmit={submitHandler} >
         <div className="row">
             <div className="input-field col s12">
                 <input onChange={usernameHandler} type="text" placeholder="Enter your name" value={username}/>
@@ -75,23 +68,7 @@ function SignUp(props) {
     </form>
 </div>
 
-    );
+  );
 }
 
 export default SignUp;
-
-
-
-
-
-
-
-// <div>
-//     <form onSubmit={submitHandler}>
-//         <input onChange={usernameHandler} type="text" placeholder="Enter your name" value={username}/>
-//         <input onChange={emailHandler} type="text" placeholder="Enter your email" value={email}/>
-//         <input onChange={passwordHandler} type="password" placeholder='Enter your password' value={password}/>
-//         <button type="submit">Sign Up</button>
-//         <div>{error && error}</div>
-//     </form>
-// </div>

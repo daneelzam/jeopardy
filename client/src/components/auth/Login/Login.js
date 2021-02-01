@@ -1,55 +1,51 @@
-import {React, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import {useDispatch} from "react-redux";
-import {authSuccessAC} from "../../../redux/actionCreators/authAC";
+import { React, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authSuccessAC } from '../../../redux/actionCreators/authAC';
 
-function Login(props) {
-    const dispatch = useDispatch()
-    const history = useHistory()
+function Login() {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const [error, setError] = useState()
-    const [email, setEmail] = useState('')
-    const [password,setPassword] = useState('')
+  const [error, setError] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const emailHandler = (event) => {
-        const email = event.target.value
-        setEmail(email)
-    }
+  const emailHandler = (event) => {
+    const emailUser = event.target.value;
+    setEmail(emailUser);
+  };
 
-    const passwordHandler = (event) => {
-        const password = event.target.value
-        setPassword(password)
-    }
+  const passwordHandler = (event) => {
+    const passwordUser = event.target.value;
+    setPassword(passwordUser);
+  };
 
-    const submitHandler = (event) => {
-        event.preventDefault();
-        // console.log(process.env.REACT_APP_URL)
-        fetch(`${process.env.REACT_APP_URL}/api/auth/login`,{
-            method:'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify({email,password})
-        }).then(response => response.json())
-            .then((serverData) => {
-                if(serverData.user){
-                    dispatch(authSuccessAC(serverData.user));
-                    return history.push('/dashboard')
-                }
-                return setError('Wrong email or password');
-            }).catch(() => setError('Wrong email or password'))
-    };
+  const submitHandler = (event) => {
+    event.preventDefault();
+    fetch(`${process.env.REACT_APP_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    }).then((response) => response.json())
+      .then((serverData) => {
+        if (serverData.user) {
+          dispatch(authSuccessAC(serverData.user));
+          return history.push('/dashboard');
+        }
+        return setError('Wrong email or password');
+      }).catch(() => setError('Wrong email or password'));
+  };
 
+  return (
 
-
-
-    return (
-
-        <div className="row" style={{margin:"100px auto"}}>
-            <form className="col s12" style={{display:"flex" ,flexDirection:"column"}} onSubmit={submitHandler}>
+        <div className="row" style={{ margin: '100px auto' }}>
+            <form className="col s12" style={{ display: 'flex', flexDirection: 'column' }} onSubmit={submitHandler}>
                 <div className="row">
                     <div className="input-field col s12">
-                        <input onChange={emailHandler} type="text"  placeholder="Enter your email" value={email}/>
+                        <input onChange={emailHandler} type="text" placeholder="Enter your email" value={email}/>
                     </div>
                 </div>
                 <div className="row">
@@ -62,10 +58,7 @@ function Login(props) {
             </form>
         </div>
 
-
-    );
+  );
 }
 
 export default Login;
-
-

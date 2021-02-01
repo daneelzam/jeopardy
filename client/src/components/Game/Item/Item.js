@@ -1,34 +1,32 @@
-import React ,{useState} from 'react';
-import {useDispatch} from "react-redux";
-import {rightAnsAC} from "../../../redux/actionCreators/gameAC";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { rightAnsAC } from '../../../redux/actionCreators/gameAC';
 
-function Item({question, btn}) {
-    const [answer,setAnswer] = useState('')
-    const dispatch = useDispatch();
-    const answerHandler = (event) => {
-        const newState = event.target.value
-        setAnswer(newState)
-    }
-    const submitHandler = (e)=>{
-        e.preventDefault();
-        fetch(`${process.env.REACT_APP_URL}/api/game/${question.id}`)
-            .then(res => res.json())
-            .then(data => {
-                if (answer == data.answer){
-                    dispatch(rightAnsAC(question.cost))
-                    btn.current.classList.add('disabled')
-                } else {
-                    console.log(btn.current.classList)
-                    btn.current.classList.add('disabled')
-                }
-            })
-    }
+function Item({ question }) {
+  const [answer, setAnswer] = useState('');
+  const dispatch = useDispatch();
+  const answerHandler = (event) => {
+    const newState = event.target.value;
+    setAnswer(newState);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    fetch(`${process.env.REACT_APP_URL}/api/game/${question.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (answer.trim().toLowerCase() === data.answer.trim().toLowerCase()) {
+          dispatch(rightAnsAC(question.id, question.cost));
+        } else {
+          dispatch(rightAnsAC(question.id));
+        }
+      });
+  };
   return (
     <div>
-      <form onSubmit={submitHandler}>
-       <p>{question.title}</p>
+      <form onSubmit={submitHandler} style={{ minHeight: '300px', padding: '30px' }}>
+       <span style={{ fontSize: '24px' }}>{question.title}</span>
         <input onChange={answerHandler} value={answer}/>
-        <button>Ответить</button>
+        <button className="modal-close waves-effect waves-green btn">Ответить</button>
       </form>
     </div>
   );
