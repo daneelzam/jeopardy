@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const Card = require('../models/Card');
 const Question = require('../models/Question');
+const Game = require('../models/Game');
+const User = require('../models/User');
 
 router.get('/game', async (req, res) => {
   const cards = await Card.find({}).populate('questions');
@@ -18,10 +20,33 @@ router.get('/game', async (req, res) => {
   res.json({ frontCards });
 });
 
-router.get('/game/:id', async (req, res) => {
+router.post('/game/:id', async (req, res) => {
+  // получаем из тела запроса юзера и его ответ
+  const { answer, user } = req.body;
+  // получаем id вопроса
   const { id } = req.params;
-  const questtion = await Question.findOne({ _id: id });
-  res.json({ answer: questtion.answer });
+  // находим вопрос среди нашей коллекции
+  const dbUser = await User.findOne({ _id: user._id });
+  const question = await Question.findOne({ _id: id });
+  // ищем среди наших игр ту, которая закреплена за юзером
+  let game = await Game.findOne({ user: dbUser._id });
+  // если игры нет, то создаем новую
+  if (!game) {
+    game = await new Game({
+      user: dbUser.id,
+      score: 0,
+    });
+  }
+  // отмечаем, что игрок сыграл этот вопрос
+  game.status.push(question.id);
+  // если ответ верный
+  if (answer.trim().toLowerCase() === question.answer.trim().toLowerCase()) {
+    // увеличиваем счет
+    game.score += question.cost;
+  }
+  // сохраняем игру
+  game.save();
+  res.json({ score: game.score, status: game.status });
 });
 
 module.exports = router;

@@ -27,8 +27,8 @@ const gameReducer = (state = preloadedState, action) => {
     case RIGHT_ANS:
       return {
         ...state,
-        score: state.score + action.payload.score,
-        status: [...state.status, action.payload.id]
+        score: action.payload.score,
+        status: [...action.payload.status]
       };
     case GAME_ERROR:
       return {
