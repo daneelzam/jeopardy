@@ -1,13 +1,20 @@
 import { React, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { authSuccessAC } from '../../../redux/actionCreators/authAC';
+import { loginFetchAC } from '../../../redux/actionCreators/authAC';
 
 function Login() {
-  const dispatch = useDispatch();
   const history = useHistory();
 
-  const [error, setError] = useState();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  if (isAuth) {
+    history.push('/dashboard');
+  }
+
+  const authError = useSelector((state) => state.auth.authError);
+
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,20 +30,7 @@ function Login() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    fetch(`${process.env.REACT_APP_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    }).then((response) => response.json())
-      .then((serverData) => {
-        if (serverData.user) {
-          dispatch(authSuccessAC(serverData.user));
-          return history.push('/dashboard');
-        }
-        return setError('Wrong email or password');
-      }).catch(() => setError('Wrong email or password'));
+    dispatch(loginFetchAC({ email, password }));
   };
 
   return (
@@ -54,7 +48,7 @@ function Login() {
                     </div>
                 </div>
                 <button className="waves-effect waves-light btn" type="submit">Login</button>
-                <div className="new badge red">{error && error}</div>
+                <div className="new badge red">{authError && authError}</div>
             </form>
         </div>
 
