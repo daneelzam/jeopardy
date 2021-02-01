@@ -3,7 +3,9 @@ import List from '../../Game/List/List';
 
 function Dashboard() {
   return (
-        <List/>
+    <>
+      <List/>
+    </>
   );
 }
 

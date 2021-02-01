@@ -1,9 +1,13 @@
-import { GAMES_LIST, GAME_ERROR, INIT_GAME, RIGHT_ANS } from '../types';
+import {
+  CLEAR_LOCAL_STORAGE,
+  GAMES_LIST, GAME_ERROR, INIT_GAME, RIGHT_ANS
+} from '../types';
 
 export const initGameAC = (cards) => ({ type: INIT_GAME, payload: cards });
 export const rightAnsAC = (score, status) => ({ type: RIGHT_ANS, payload: { score, status } });
 export const gameErrorAC = (error) => ({ type: GAME_ERROR, payload: error });
 export const gameListAC = (games) => ({ type: GAMES_LIST, payload: games });
+export const clearLocalSorage = () => ({ type: CLEAR_LOCAL_STORAGE });
 
 export const initGameFetchAC = () => (dispatch) => {
   fetch(`${process.env.REACT_APP_URL}/api/game`)
