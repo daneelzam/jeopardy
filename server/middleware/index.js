@@ -9,9 +9,7 @@ const { dbConnect } = require('./db-connect');
 const Config = function (app) {
   dotenv.config();
   app.use(cors());
-
   dbConnect();
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 

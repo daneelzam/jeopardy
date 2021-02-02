@@ -28,7 +28,7 @@ function App() {
               <Rank/>
             </Route>
             <Route path="/login">
-              {isAuth ? <Redirect to='/'></Redirect> : <Login />}
+              {isAuth ? <Redirect to='/dashboard'></Redirect> : <Login />}
             </Route>
             <Route path="/logout">
             {!isAuth ? <Redirect to='/login'></Redirect> : <LogOut />}

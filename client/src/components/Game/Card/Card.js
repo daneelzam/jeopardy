@@ -4,7 +4,6 @@ import Item from '../Item/Item';
 
 function Card({ card }) {
   const status = useSelector((state) => state.game.status);
-
   return (
     <div style={{ display: 'flex' }}>
       <h5 style={{ width: '250px' }}> {card.title}</h5>
